@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ViewEncapsulation } from '@angular/core';
+import { map } from 'rxjs';
 
 /* eslint-disable */
 
@@ -435,6 +437,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
             <span> Hello there, </span>
             Welcome frontend 👋
           </h1>
+          <h2>Message from backend: {{ message | async }}</h2>
         </div>
 
         <!--  HERO  -->
@@ -843,4 +846,9 @@ nx affected:e2e</pre>
   styles: [],
   encapsulation: ViewEncapsulation.None,
 })
-export class NxWelcomeComponent {}
+export class NxWelcomeComponent {
+  readonly message = this.http
+    .get<{ message: string }>('/api')
+    .pipe(map((x) => x.message));
+  constructor(private readonly http: HttpClient) {}
+}
