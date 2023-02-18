@@ -14,10 +14,11 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     return this.validateRequest(request);
   }
-  private async validateRequest(request: Request) {
+  private async validateRequest(request: Request & { user?: User }) {
     const token = request.cookies['TOKEN'];
     try {
-      return !!this.jwtService.verify<User>(token);
+      request.user = this.jwtService.verify<User>(token);
+      return !!request.user;
     } catch {
       return false;
     }

@@ -30,7 +30,6 @@ export class AuthController {
   ) {
     try {
       const token = await this.authService.login(credentials);
-      console.log(token);
       response.cookie('TOKEN', token);
       return token ? 'OK' : 'ERROR';
     } catch (error) {
