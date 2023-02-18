@@ -37,6 +37,11 @@ export class AuthController {
     }
   }
 
+  @Get('logout')
+  logout(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie('TOKEN');
+  }
+
   @UseGuards(AuthGuard)
   @Get('whoami')
   @Header('Content-Type', 'application/json')
