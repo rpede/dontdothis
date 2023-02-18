@@ -4,7 +4,10 @@
   "license": "MIT",
   "scripts": {
     "start": "npx nx run-many --target=serve",
-    "sync": "npx prisma generate && npx prisma db push"
+    "sync": "npx prisma generate && npx prisma db push && npx prisma db seed"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "private": true,
   "dependencies": {
@@ -20,10 +23,13 @@
     "@angular/router": "~15.1.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/jwt": "^10.0.2",
     "@nestjs/platform-express": "^9.0.0",
     "@nrwl/angular": "15.7.1",
     "@prisma/client": "^4.10.1",
     "axios": "^1.0.0",
+    "cookie-parser": "^1.4.6",
+    "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
@@ -50,10 +56,15 @@
     "@nrwl/webpack": "15.7.1",
     "@nrwl/workspace": "15.7.1",
     "@schematics/angular": "~15.1.0",
+    "@types/bcrypt": "^5.0.0",
+    "@types/cookie-parser": "^1.4.3",
     "@types/jest": "28.1.1",
+    "@types/md5": "^2.3.2",
     "@types/node": "18.7.1",
+    "@types/passport-jwt": "^3.0.8",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
+    "bcrypt": "^5.1.0",
     "cypress": "^12.2.0",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
@@ -61,6 +72,7 @@
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
     "jest-preset-angular": "~12.2.3",
+    "md5": "^2.3.0",
     "nx": "15.7.1",
     "prettier": "^2.6.2",
     "prisma": "^4.10.1",
