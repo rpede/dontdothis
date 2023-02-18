@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "npx nx run-many --target=serve"
+    "start": "npx nx run-many --target=serve",
+    "sync": "npx prisma generate && npx prisma db push"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +22,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nrwl/angular": "15.7.1",
+    "@prisma/client": "^4.10.1",
     "axios": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.5.0",
@@ -61,6 +63,7 @@
     "jest-preset-angular": "~12.2.3",
     "nx": "15.7.1",
     "prettier": "^2.6.2",
+    "prisma": "^4.10.1",
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
     "typescript": "~4.8.2"
