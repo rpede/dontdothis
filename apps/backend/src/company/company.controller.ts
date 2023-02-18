@@ -1,5 +1,5 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
-import { DatabaseService } from '../database/database.service';
+import { DatabaseService } from '../global/database.service';
 
 @Controller("company")
 export class CompanyController {

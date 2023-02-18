@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
-import { DatabaseService } from '../database/database.service';
+import { DatabaseService } from '../global/database.service';
 import bcrypt from 'bcrypt';
 import md5 from 'md5';
+import { TokenService } from '../global/token.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly db: DatabaseService,
-    private jwtService: JwtService
+    private readonly token: TokenService
   ) {}
 
   async login({ email, password }: { email: string; password: string }) {
@@ -21,9 +22,9 @@ export class AuthService {
     const user = users[0];
 
     if (await bcrypt.compare(password, user.passwordHash)) {
-      return this.jwtService.sign(user);
+      return this.token.generate(user);
     } else if (md5(password) === user.passwordHash) {
-      return this.jwtService.sign(user);
+      return this.token.generate(user);
     } else {
       return null;
     }

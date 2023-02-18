@@ -10,8 +10,8 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
+import { TokenService } from '../global/token.service';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { CredentialsDto } from './credentials.dto';
@@ -20,7 +20,7 @@ import { CredentialsDto } from './credentials.dto';
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly jwtService: JwtService
+    private readonly token: TokenService
   ) {}
 
   @Post('login')
@@ -41,6 +41,6 @@ export class AuthController {
   @Get('whoami')
   @Header('Content-Type', 'application/json')
   whoami(@Req() req: Request) {
-    return this.jwtService.decode(req.cookies['TOKEN']);
+    return this.token.user(req.cookies['TOKEN']);
   }
 }
