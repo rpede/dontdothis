@@ -19,6 +19,7 @@ export class AuthService {
       throw Error(`No match found for user ${email} !`);
     }
     const user = users[0];
+    console.log(user);
 
     if (await bcrypt.compare(password, user.passwordHash)) {
       return this.jwtService.sign(user);
