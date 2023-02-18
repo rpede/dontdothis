@@ -7,9 +7,10 @@ import { DatabaseService } from '../global/database.service';
 import { GlobalModule } from '../global/global.module';
 import { UserModule } from '../user/user.module';
 import { CompanyModule } from '../company/company.module';
+import { MessageModule } from '../message/message.module';
 
 @Module({
-  imports: [GlobalModule, AuthModule, UserModule, CompanyModule],
+  imports: [GlobalModule, AuthModule, UserModule, CompanyModule, MessageModule],
   controllers: [AppController],
   providers: [AppService, DatabaseService],
   exports: [DatabaseService],
