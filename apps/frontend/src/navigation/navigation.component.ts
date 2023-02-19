@@ -5,6 +5,8 @@ import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { SelectFolderDialogComponent } from './select-folder-dialog/select-folder-dialog.component';
 
 @Component({
   selector: 'dontdothis-navigation',
@@ -23,7 +25,8 @@ export class NavigationComponent {
     private breakpointObserver: BreakpointObserver,
     readonly router: Router,
     readonly auth: AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private dialog: MatDialog
   ) {}
 
   isLoggedIn() {
@@ -39,5 +42,13 @@ export class NavigationComponent {
   async logout() {
     await firstValueFrom(this.http.get('/api/auth/logout'));
     this.auth.refresh();
+  }
+
+  adminMessageDialog() {
+    const dialogRef = this.dialog.open(SelectFolderDialogComponent);
+    dialogRef.afterClosed().subscribe((folder) => {
+      console.log(folder);
+      this.router.navigateByUrl('/message/admin/' + folder);
+    });
   }
 }

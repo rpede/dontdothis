@@ -47,7 +47,20 @@ export class MessageController {
     if (user.role !== 'ADMIN') {
       throw new HttpException('Only allowed for admin', HttpStatus.FORBIDDEN);
     }
-    return await fs.readdir(path.join(dir, companyName));
+    const files = await fs.readdir(path.join(dir, companyName));
+    return files.map((file) => `${companyName}/${file}`);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('/company/:companyName/:filename(*)')
+  @Header('Content-Type', 'text/html')
+  async companyMessage(
+    @CurrentUser() user: User | undefined,
+    @Param('companyName') companyName: string,
+    @Param('filename') filename: string
+  ) {
+    const file = await fs.readFile(path.join(dir, companyName, filename));
+    return file.toString();
   }
 
   @Post()

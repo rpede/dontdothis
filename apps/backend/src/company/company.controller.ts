@@ -1,7 +1,15 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '../auth/auth.guard';
 import { DatabaseService } from '../global/database.service';
 
-@Controller("company")
+@UseGuards(AuthGuard)
+@Controller('company')
 export class CompanyController {
   constructor(private readonly db: DatabaseService) {}
 

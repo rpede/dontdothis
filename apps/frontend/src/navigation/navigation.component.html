@@ -63,11 +63,20 @@
         Companies
       </a>
       <a
-        *ngIf="hasRole('COMPANY', 'ADMIN') | async"
+        *ngIf="hasRole('COMPANY') | async"
         mat-list-item
         routerLink="/message"
         [activated]="router.isActive('/message', true)"
         routerLinkActive="list-item-active"
+      >
+        Messages
+      </a>
+      <a
+        *ngIf="hasRole('ADMIN') | async"
+        mat-list-item
+        [activated]="router.isActive('/message/admin', true)"
+        routerLinkActive="list-item-active"
+        (click)="adminMessageDialog()"
       >
         Messages
       </a>
