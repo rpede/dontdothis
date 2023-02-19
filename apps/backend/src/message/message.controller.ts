@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Header,
   HttpException,
   HttpStatus,
   Param,
@@ -10,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { createReadStream } from 'fs';
+import { createReadStream, rmSync } from 'fs';
 import * as fs from 'fs/promises';
 import { userInfo } from 'os';
 import path from 'path';
@@ -63,13 +64,14 @@ export class MessageController {
 
   @UseGuards(AuthGuard)
   @Get(':filename(*)')
+  @Header('Content-Type', 'text/html')
   async message(
     @CurrentUser() user: User | undefined,
     @Param('filename') filename: string
   ) {
     const companyName = (await this.getCompanyName(user)) ?? 'Unknown';
-    const file = createReadStream(path.join(dir, companyName, filename));
-    return new StreamableFile(file);
+    const file = await fs.readFile(path.join(dir, companyName, filename));
+    return file.toString();
   }
 
   private async getCompanyName(user?: User) {
