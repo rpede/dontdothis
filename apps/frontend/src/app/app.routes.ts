@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AboutComponent } from './about/about.component';
 import { WorkComponent } from './work/work.component';
 
 export const appRoutes: Routes = [
@@ -10,6 +11,10 @@ export const appRoutes: Routes = [
   {
     path: 'work',
     component: WorkComponent,
+  },
+  {
+    path: 'about',
+    component: AboutComponent,
   },
   {
     path: 'user',

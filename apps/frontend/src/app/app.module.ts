@@ -10,9 +10,21 @@ import { appRoutes } from './app.routes';
 import { NavigationModule } from '../navigation/navigation.module';
 import { LoginModule } from '../login/login.module';
 import { WorkComponent } from './work/work.component';
+import { AboutComponent } from './about/about.component';
+import { MessageFormComponent } from './message-form/message-form.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [AppComponent, WorkComponent],
+  declarations: [
+    AppComponent,
+    WorkComponent,
+    AboutComponent,
+    MessageFormComponent,
+  ],
   imports: [
     CommonModule,
     BrowserModule,
@@ -21,6 +33,12 @@ import { WorkComponent } from './work/work.component';
     HttpClientModule,
     NavigationModule,
     LoginModule,
+
+    ReactiveFormsModule,
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
