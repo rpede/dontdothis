@@ -20,10 +20,10 @@ export class UserController {
   }
 
   @Get(':id')
-  user(
-    @CurrentUser() { companyId }: User,
-    @Param('id', ParseIntPipe) id: number
-  ) {
-    return this.db.user.findFirst({ where: { id, companyId } });
+  user(@CurrentUser() user: User, @Param('id', ParseIntPipe) id: number) {
+    return this.db.user.findFirst({
+      where: { id, companyId: user.companyId ?? undefined },
+      include: { company: true },
+    });
   }
 }

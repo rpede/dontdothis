@@ -10,5 +10,10 @@ export const appRoutes: Routes = [
   {
     path: 'work',
     component: WorkComponent
-  }
+  },
+  {
+    path: 'user',
+    loadChildren: () =>
+      import('../user/user.module').then((m) => m.UserModule),
+  },
 ];
