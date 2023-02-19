@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Editor } from 'ngx-editor';
 
@@ -30,6 +29,6 @@ export class MessageFormComponent implements OnInit, OnDestroy {
         from: this.from,
         content: this.content,
       })
-      .subscribe(({ message }) => this.snackBar.open(message));
+      .subscribe(({ message }) => this.snackBar.open(message, 'dismiss'));
   }
 }

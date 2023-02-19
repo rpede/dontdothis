@@ -27,7 +27,7 @@ export class LoginComponent {
     const { message } = await firstValueFrom(
       this.http.post<{ message: string }>('/api/auth/login', this.form.value)
     );
-    this.snackBar.open(message);
+    this.snackBar.open('Login: ' + message, 'dismiss');
     this.auth.refresh();
   }
 }
