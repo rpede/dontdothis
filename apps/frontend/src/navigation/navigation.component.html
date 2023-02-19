@@ -42,6 +42,14 @@
       >
         Companies
       </a>
+      <a
+        mat-list-item
+        routerLink="/message"
+        [activated]="router.isActive('/message', true)"
+        routerLinkActive="list-item-active"
+      >
+        Messages
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

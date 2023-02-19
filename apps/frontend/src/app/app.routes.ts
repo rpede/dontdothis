@@ -20,4 +20,9 @@ export const appRoutes: Routes = [
     loadChildren: () =>
       import('../company/company.module').then((m) => m.CompanyModule),
   },
+  {
+    path: 'message',
+    loadChildren: () =>
+      import('../message/message.module').then((m) => m.MessageModule),
+  },
 ];
