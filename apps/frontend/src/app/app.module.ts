@@ -9,9 +9,10 @@ import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { NavigationModule } from '../navigation/navigation.module';
 import { LoginModule } from '../login/login.module';
+import { WorkComponent } from './work/work.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, WorkComponent],
   imports: [
     CommonModule,
     BrowserModule,
