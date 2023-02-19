@@ -4,11 +4,11 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { NavigationModule } from '../navigation/navigation.module';
+import { LoginModule } from '../login/login.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +19,7 @@ import { NavigationModule } from '../navigation/navigation.module';
     BrowserAnimationsModule,
     HttpClientModule,
     NavigationModule,
-    MatSlideToggleModule,
+    LoginModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

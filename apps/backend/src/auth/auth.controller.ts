@@ -24,6 +24,7 @@ export class AuthController {
   ) {}
 
   @Post('login')
+  @Header('Content-Type', 'application/json')
   async login(
     @Body() credentials: CredentialsDto,
     @Res({ passthrough: true }) response: Response
@@ -31,13 +32,14 @@ export class AuthController {
     try {
       const token = await this.authService.login(credentials);
       response.cookie('TOKEN', token);
-      return token ? 'OK' : 'ERROR';
+      return { message: token ? 'OK' : 'ERROR' };
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 
   @Get('logout')
+  @Header('Content-Type', 'application/json')
   logout(@Res({ passthrough: true }) response: Response) {
     response.clearCookie('TOKEN');
   }
