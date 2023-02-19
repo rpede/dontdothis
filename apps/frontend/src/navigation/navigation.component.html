@@ -36,7 +36,7 @@
         Work
       </a>
       <a
-        *ngIf="hasRole('NORMAL', 'COMPANY') | async"
+        *ngIf="hasRole('NORMAL', 'MANAGER') | async"
         mat-list-item
         routerLink="/info"
         [activated]="router.isActive('/info', true)"
@@ -45,7 +45,7 @@
         Info
       </a>
       <a
-        *ngIf="hasRole('COMPANY', 'ADMIN') | async"
+        *ngIf="hasRole('MANAGER', 'ADMIN') | async"
         mat-list-item
         routerLink="/user"
         [activated]="router.isActive('/user', true)"
@@ -63,7 +63,7 @@
         Companies
       </a>
       <a
-        *ngIf="hasRole('COMPANY') | async"
+        *ngIf="hasRole('MANAGER') | async"
         mat-list-item
         routerLink="/message"
         [activated]="router.isActive('/message', true)"

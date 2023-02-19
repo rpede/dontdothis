@@ -30,7 +30,7 @@ export class MessageController {
   @UseGuards(AuthGuard)
   @Get()
   async messages(@CurrentUser() user: User) {
-    if (user.role === Role.COMPANY) {
+    if (user.role === Role.MANAGER) {
       const companyName = await this.getCompanyName(user);
       return await fs.readdir(path.join(dir, companyName));
     } else {

@@ -36,7 +36,7 @@ async function main() {
     email: 'michaelscott@a.com',
     name: 'Michael Scott',
     passwordHash: 'bdc87b9c894da5168059e00ebffb9077', // password1234
-    role: 'COMPANY',
+    role: 'MANAGER',
     companyId: companyA.id,
   });
   await saveUser({
@@ -59,7 +59,7 @@ async function main() {
     email: 'boss@b.com',
     name: 'Pointy-haired Boss',
     passwordHash: 'f8f4877c5d8062c7ce207170d070f11b', // p3cafx4q
-    role: 'COMPANY',
+    role: 'MANAGER',
     companyId: companyB.id,
   });
   await saveUser({
