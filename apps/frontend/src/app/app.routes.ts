@@ -9,11 +9,15 @@ export const appRoutes: Routes = [
   },
   {
     path: 'work',
-    component: WorkComponent
+    component: WorkComponent,
   },
   {
     path: 'user',
+    loadChildren: () => import('../user/user.module').then((m) => m.UserModule),
+  },
+  {
+    path: 'company',
     loadChildren: () =>
-      import('../user/user.module').then((m) => m.UserModule),
+      import('../company/company.module').then((m) => m.CompanyModule),
   },
 ];

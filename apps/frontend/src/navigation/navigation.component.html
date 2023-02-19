@@ -34,6 +34,14 @@
       >
         Users
       </a>
+      <a
+        mat-list-item
+        routerLink="/company"
+        [activated]="router.isActive('/company', true)"
+        routerLinkActive="list-item-active"
+      >
+        Companies
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
