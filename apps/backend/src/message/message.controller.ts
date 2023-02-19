@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   StreamableFile,
@@ -14,6 +16,7 @@ import path from 'path';
 import { AuthGuard } from '../auth/auth.guard';
 import { CurrentUser } from '../current-user.decorator';
 import { DatabaseService } from '../global/database.service';
+import { Role } from '../role';
 import { MessageDto } from './message.dto';
 
 const dir = 'user-data/';
@@ -24,8 +27,25 @@ export class MessageController {
 
   @UseGuards(AuthGuard)
   @Get()
-  async messages() {
-    return await fs.readdir(dir);
+  async messages(@CurrentUser() user: User) {
+    if (user.role === Role.COMPANY) {
+      const companyName = await this.getCompanyName(user);
+      return await fs.readdir(path.join(dir, companyName));
+    } else {
+      return (await fs.readdir(dir)).filter((fn) => !fn.startsWith('.'));
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('company/:companyName')
+  async messagesForCompany(
+    @CurrentUser() user: User,
+    @Param('companyName') companyName: string
+  ) {
+    if (user.role !== 'ADMIN') {
+      throw new HttpException('Only allowed for admin', HttpStatus.FORBIDDEN);
+    }
+    return await fs.readdir(path.join(dir, companyName));
   }
 
   @Post()
@@ -42,14 +62,17 @@ export class MessageController {
     @CurrentUser() user: User,
     @Param('filename') filename: string
   ) {
-    const companyName =
-      (
-        await this.db.company.findFirst({
-          where: { id: user.companyId },
-          rejectOnNotFound: false,
-        })
-      ).name ?? 'Unknown';
+    const companyName = (await this.getCompanyName(user)) ?? 'Unknown';
     const file = createReadStream(path.join(dir, companyName, filename));
     return new StreamableFile(file);
+  }
+
+  private async getCompanyName(user: User) {
+    return (
+      await this.db.company.findFirst({
+        where: { id: user.companyId ?? undefined },
+        rejectOnNotFound: false,
+      })
+    ).name;
   }
 }
