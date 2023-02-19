@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { firstValueFrom } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'dontdothis-login',
@@ -17,12 +19,15 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
+    private auth: AuthService,
     private snackBar: MatSnackBar
   ) {}
 
-  onSubmit(): void {
-    this.http
-      .post<{message: string}>('/api/auth/login', this.form.value)
-      .subscribe(({message}) => this.snackBar.open(message));
+  async onSubmit() {
+    const { message } = await firstValueFrom(
+      this.http.post<{ message: string }>('/api/auth/login', this.form.value)
+    );
+    this.snackBar.open(message);
+    this.auth.refresh();
   }
 }
