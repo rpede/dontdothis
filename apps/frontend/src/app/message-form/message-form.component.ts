@@ -1,28 +1,35 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Editor } from 'ngx-editor';
 
 @Component({
   selector: 'dontdothis-message-form',
   templateUrl: './message-form.component.html',
   styleUrls: ['./message-form.component.scss'],
 })
-export class MessageFormComponent {
-  form = this.fb.group({
-    from: [null, Validators.required],
-    content: [null, Validators.required],
-  });
+export class MessageFormComponent implements OnInit, OnDestroy {
+  from = '';
+  content = '';
+  editor?: Editor;
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
+
+  ngOnInit(): void {
+    this.editor = new Editor();
+  }
+
+  ngOnDestroy(): void {
+    this.editor?.destroy();
+  }
 
   onSubmit(): void {
     this.http
-      .post<{ message: string }>('/api/message', this.form.value)
+      .post<{ message: string }>('/api/message', {
+        from: this.from,
+        content: this.content,
+      })
       .subscribe(({ message }) => this.snackBar.open(message));
   }
 }

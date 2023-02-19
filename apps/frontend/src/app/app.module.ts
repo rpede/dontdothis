@@ -15,8 +15,9 @@ import { MessageFormComponent } from './message-form/message-form.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { NgxEditorModule } from 'ngx-editor';
 
 @NgModule({
   declarations: [
@@ -34,11 +35,12 @@ import { MatButtonModule } from '@angular/material/button';
     NavigationModule,
     LoginModule,
 
-    ReactiveFormsModule,
+    FormsModule,
     MatCardModule,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    NgxEditorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

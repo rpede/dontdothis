@@ -12,6 +12,7 @@ import {
 import { User } from '@prisma/client';
 import { createReadStream } from 'fs';
 import * as fs from 'fs/promises';
+import { userInfo } from 'os';
 import path from 'path';
 import { AuthGuard } from '../auth/auth.guard';
 import { CurrentUser } from '../current-user.decorator';
@@ -39,7 +40,7 @@ export class MessageController {
   @UseGuards(AuthGuard)
   @Get('company/:companyName')
   async messagesForCompany(
-    @CurrentUser() user: User,
+    @CurrentUser() user: User | undefined,
     @Param('companyName') companyName: string
   ) {
     if (user.role !== 'ADMIN') {
@@ -49,17 +50,21 @@ export class MessageController {
   }
 
   @Post()
-  async save(@Body() message: MessageDto) {
+  async save(
+    @CurrentUser() user: User | undefined,
+    @Body() message: MessageDto
+  ) {
     const timestamp = new Date().toISOString();
     const filename = `${timestamp}_${message.from}.html`;
-    fs.writeFile(path.join(dir, filename), message.content);
+    const companyName = (await this.getCompanyName(user)) ?? 'Unknown';
+    fs.writeFile(path.join(dir, companyName, filename), message.content);
     return 'OK';
   }
 
   @UseGuards(AuthGuard)
   @Get(':filename(*)')
   async message(
-    @CurrentUser() user: User,
+    @CurrentUser() user: User | undefined,
     @Param('filename') filename: string
   ) {
     const companyName = (await this.getCompanyName(user)) ?? 'Unknown';
@@ -67,10 +72,10 @@ export class MessageController {
     return new StreamableFile(file);
   }
 
-  private async getCompanyName(user: User) {
+  private async getCompanyName(user?: User) {
     return (
       await this.db.company.findFirst({
-        where: { id: user.companyId ?? undefined },
+        where: { id: user?.companyId },
         rejectOnNotFound: false,
       })
     ).name;
