@@ -18,6 +18,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxEditorModule } from 'ngx-editor';
+import { MatListModule } from '@angular/material/list';
+import { InfoComponent } from './info/info.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { NgxEditorModule } from 'ngx-editor';
     WorkComponent,
     AboutComponent,
     MessageFormComponent,
+    InfoComponent
   ],
   imports: [
     CommonModule,
@@ -34,6 +37,8 @@ import { NgxEditorModule } from 'ngx-editor';
     HttpClientModule,
     NavigationModule,
     LoginModule,
+
+    MatListModule,
 
     FormsModule,
     MatCardModule,

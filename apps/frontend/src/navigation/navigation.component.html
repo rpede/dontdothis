@@ -36,6 +36,15 @@
         Work
       </a>
       <a
+        *ngIf="hasRole('NORMAL', 'COMPANY') | async"
+        mat-list-item
+        routerLink="/info"
+        [activated]="router.isActive('/info', true)"
+        routerLinkActive="list-item-active"
+      >
+        Info
+      </a>
+      <a
         *ngIf="hasRole('COMPANY', 'ADMIN') | async"
         mat-list-item
         routerLink="/user"
