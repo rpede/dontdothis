@@ -88,11 +88,14 @@ export class MessageController {
   }
 
   private async getCompanyName(user?: User) {
-    return (
-      await this.db.company.findFirst({
+    try {
+      const company = await this.db.company.findUnique({
         where: { id: user?.companyId },
-        rejectOnNotFound: false,
-      })
-    ).name;
+      });
+      return company.name;
+    }
+    catch {
+      return null;
+    }
   }
 }
