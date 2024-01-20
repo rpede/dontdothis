@@ -4,6 +4,8 @@ Simple web application with a bunch of serious security flaws.
 
 It is intended as a teaching tool for security.
 
+**WARNING** Only run in a safe environment as it will expose the entire filesystem over HTTP.
+
 ## Getting started
 
 Run `npm ci` to install dependencies.
